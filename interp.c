@@ -1219,6 +1219,7 @@ dosval(char *colstr, double rowdoub)
     size_t l;
 
     llabel = (ep = getent(colstr, rowdoub)) ? (ep -> label) : "";
+    if (llabel == 0) llabel = "";
     l = strlen(llabel) + 1;
     buf = scxmalloc(l);
     strlcpy(buf, llabel, l);

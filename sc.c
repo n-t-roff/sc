@@ -2229,7 +2229,7 @@ modcheck(char *endstr)
 {
     if (modflg && curfile[0]) {
 	int	yn_ans;
-	char	lin[100];
+	char	lin[32+strlen(curfile)+strlen(endstr)];
 
 	snprintf(lin, sizeof lin, "File \"%s\" is modified, save%s? ",curfile,endstr);
 	if ((yn_ans = yn_ask(lin)) < 0)

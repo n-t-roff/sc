@@ -1138,7 +1138,7 @@ pressed to use the mouse \(oqcut and paste\(cq feature.
 Currently selecting cells with the left mouse button,
 vertical scrolling using the mouse wheel
 (requires ncurses version \(>= 6), and
-selecting the position in the edit line with the left mosue button
+selecting the position in the edit line with the left mouse button
 is implemented.
 .RE
 .\" ==========
@@ -1615,7 +1615,7 @@ scientific (\(lq0.00E+00\(rq),
 and currency (\(lq$#,0.00;($#,0.00)\(rq).
 .IP
 Date format strings are identified by the
-presence of a ^D in the first postition.
+presence of a ^D in the first position.
 If this is present, the remainder of the
 string is passed to the strftime() function,
 and therefore uses the same conversion
@@ -2485,7 +2485,7 @@ leaving only the values which were in the cells
 before the command was executed.
 When used in a framed range,
 .B vr
-only affects the portion of the the row inside the range,
+only affects the portion of the row inside the range,
 leaving the rest of the row unchanged.
 .B vv
 only affects the contents of the current cell.
@@ -3715,7 +3715,7 @@ The range should be either a single row or a single column.
 The expression can be either a string expression
 or a numeric expression.
 If it is a numeric expression, the range is searched
-for the the last value less than or equal to 
+for the last value less than or equal to 
 .IR e .
 If the expression is a string expression, the string portions
 of the cells in the range are searched for an exact string match.
@@ -3742,7 +3742,7 @@ for a matching value.
 The expression can be either a string expression
 or a numeric expression.
 If it is a numeric expression,
-the row is searched for the the last value less than or equal to 
+the row is searched for the last value less than or equal to 
 .IR e .
 If the expression is a string expression, the string portions
 of the cells in the row are searched for an exact string match.
@@ -3769,7 +3769,7 @@ for a matching value.
 The expression can be either a string
 expression or a numeric expression.
 If it is a numeric expression, the column is searched
-for the the last value less than or equal to 
+for the last value less than or equal to 
 .IR e .
 If the expression is a string expression, the string portions
 of the cells in the column are searched for an exact string match.
@@ -4028,7 +4028,7 @@ to result in an error.
 String expressions are made up of constant strings
 (characters surrounded by double quotation marks),
 variables
-(cell names, which refer to the cells's label strings or expressions),
+(cell names, which refer to the cells' label strings or expressions),
 and string functions.
 Note that string expressions are only allowed
 when entering a cell's label string, not its numeric part.

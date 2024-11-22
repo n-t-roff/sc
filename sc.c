@@ -345,6 +345,7 @@ main (int argc, char  **argv)
     if (popt)
 	*revmsg = '\0';
     else {
+	const char *revi;
 	strlcpy(revmsg, progname, sizeof revmsg);
 	for (revi = rev; (*revi++) != ':'; );	/* copy after colon */
 	strlcat(revmsg, revi, sizeof revmsg);

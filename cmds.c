@@ -2991,7 +2991,7 @@ readfile(char *fname, int eraseflg)
 		return 0;
 	    }
 	    *save = '|';
-	    if ((strlen(save) + strlen(fname) + 2) > PATHLEN) {
+	    if ((strlen(save) + strlen(fname) + 4) > PATHLEN) {
 		error("Path too long");
 		return 0;
 	    }

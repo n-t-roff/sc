@@ -2955,7 +2955,7 @@ contents of the cell containing the link,
 similar to a footnote, or it may simply be
 another part of the spreadsheet that is
 related to the cell in some way.
-When you press the \(oqn\(cq key, you will get a
+When you press the \(oq*\(cq key, you will get a
 short prompt asking you whether you want
 to add or delete a note, or to \(lqshow\(rq
 (by highlighting) which cells on the

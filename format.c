@@ -94,6 +94,7 @@
 #include <sys/types.h>
 #include <time.h>
 #include <limits.h>
+#include <math.h>
 #include "compat.h"
 #include "sc.h"
 
@@ -504,7 +505,7 @@ engformat(int fmt, int width, int lprecision, double val, char *buf, int buflen)
 	"+03", "+06", "+09", "+12", "+15", "+18"
     };
     int engind = 0;
-    double engmant, pow(), engabs, engexp;
+    double engmant, engabs, engexp;
 
     if (buflen < width) return (false);
     if (fmt >= 0 && fmt < COLFORMATS && colformat[fmt])

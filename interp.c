@@ -75,8 +75,8 @@ struct enode *freeenodes = NULL;
 
 double	dolookup(struct enode * val, int minr, int minc, int maxr,
 	int maxc, int offr, int offc);
-double	fn1_eval(double (*fn)(), double arg);
-double	fn2_eval(double (*fn)(), double arg1, double arg2);
+double	fn1_eval(double (*fn)(double), double arg);
+double	fn2_eval(double (*fn)(double, double), double arg1, double arg2);
 static int RealEvalAll(void);
 int	constant(register struct enode *e);
 void	RealEvalOne(register struct ent *p, int i, int j, int *chgct);
@@ -1018,7 +1018,7 @@ eval_fpe(int i) /* Trap for FPE errors in eval */
 }
 
 double
-fn1_eval(double (*fn)(), double a)
+fn1_eval(double (*fn)(double), double a)
 {
     double res;
     errno = 0;
@@ -1030,7 +1030,7 @@ fn1_eval(double (*fn)(), double a)
 }
 
 double
-fn2_eval(double (*fn)(), double arg1, double arg2)
+fn2_eval(double (*fn)(double, double), double arg1, double arg2)
 {
     double res;
     errno = 0;

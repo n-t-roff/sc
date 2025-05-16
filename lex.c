@@ -195,9 +195,9 @@ yylex(void)
 	}
     } else if ((*p == '.') || isdigit((int)*p)) {
 #ifdef SIGVOID
-	void (*sig_save)();
+	void (*sig_save)(int signum);
 #else
-	int (*sig_save)();
+	int (*sig_save)(int signum);
 #endif
 	double v = 0.0;
 	int temp;

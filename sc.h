@@ -507,7 +507,7 @@ extern	void getfmt(int r0, int c0, int rn, int cn, int fd);
 extern	void getformat(int col, int fd);
 extern	void getnum(int r0, int c0, int rn, int cn, int fd);
 extern	void getstring(int r0, int c0, int rn, int cn, int fd);
-extern	void go_last(void);
+extern	void go_last(int reverse);
 extern	void goraw(void);
 extern	void help(void);
 extern	void hide_col(int arg);
@@ -534,7 +534,7 @@ extern	void moveto(int row, int col, int lastrow, int lastcol,
 	int cornrow, int corncol);
 extern	void toggle_navigate_mode(void);
 extern	void num_search(double n, int firstrow, int firstcol, int lastrow,
-	int lastcol, int errsearch);
+	int lastcol, int errsearch, int reverse);
 extern	void printfile(char *fname, int r0, int c0, int rn, int cn);
 extern	void pullcells(int to_insert);
 extern	void query(const char *s, char *data);
@@ -559,7 +559,7 @@ extern	void startshow(void);
 extern	void startdisp(void);
 extern	void stopdisp(void);
 extern	void str_search(char *s, int firstrow, int firstcol, int lastrow,
-	int lastcol, int num);
+	int lastcol, int num, int reverse);
 extern	void sync_cranges(void);
 extern	void sync_franges(void);
 extern	void sync_ranges(void);

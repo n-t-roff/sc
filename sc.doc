@@ -1309,7 +1309,10 @@ The last
 command is saved, and can be re-issued by entering 
 .BR g <return>.
 You can also repeat the last search by pressing
-.BR n .
+.BR n
+(or
+.BR N
+to repeat the search in the opposite direction).
 .IP
 An optional second argument is available whose meaning
 depends on whether you're doing a search or jumping to a

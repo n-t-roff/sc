@@ -522,6 +522,7 @@ write_line(int c)
 				}
 									break;
 	case 'L':		forwcol(lcols - (curcol - stcol) + 1);	break;
+	case 'N':		go_last(1);				break;
 	case (ctl('a')):
 	case KEY_HOME:		gohome();				break;
 	case '0':		leftlimit();				break;
@@ -543,7 +544,7 @@ write_line(int c)
 	case '`': case '\'':	dotick(c);				break;
 	case '*':		if (nmgetch() == '*') gotonote();	break;
 	case 'g':		dogoto();				break;
-	case 'n':		go_last();				break;
+	case 'n':		go_last(0);				break;
 	case 'w':		{
 				register struct ent *p;
 

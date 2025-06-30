@@ -1688,7 +1688,10 @@ main (int argc, char  **argv)
 		    insert_mode();
 		    break;
 		case 'n':
-		    go_last();
+		    go_last(0);
+		    break;
+		case 'N':
+		    go_last(1);
 		    break;
 		case 'P':
 		    snprintf(line, sizeof line, "put [\"dest\" range] \"");

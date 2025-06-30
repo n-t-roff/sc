@@ -585,29 +585,29 @@ command:	S_LET var_or_range '=' e
 	|       S_GOTO num range	{ num_search($2,
 					  $3.left.vp->row, $3.left.vp->col,
 					  $3.right.vp->row,
-					  $3.right.vp->col, 0); }
+					  $3.right.vp->col, 0, 0); }
 	|       S_GOTO num		{ num_search($2, 0, 0,
-					  maxrow, maxcol, 0); }
+					  maxrow, maxcol, 0, 0); }
 	|       S_GOTO errlist
 	|       S_GOTO STRING range	{ str_search($2,
 					  $3.left.vp->row, $3.left.vp->col,
 					  $3.right.vp->row,
-					  $3.right.vp->col, 0); }
+					  $3.right.vp->col, 0, 0); }
 	|       S_GOTO '#' STRING range	{ str_search($3,
 					  $4.left.vp->row, $4.left.vp->col,
 					  $4.right.vp->row,
-					  $4.right.vp->col, 1); }
+					  $4.right.vp->col, 1, 0); }
 	|       S_GOTO '%' STRING range	{ str_search($3,
 					  $4.left.vp->row, $4.left.vp->col,
 					  $4.right.vp->row,
-					  $4.right.vp->col, 2); }
+					  $4.right.vp->col, 2, 0); }
 	|       S_GOTO STRING		{ str_search($2, 0, 0,
-					  maxrow, maxcol, 0); }
+					  maxrow, maxcol, 0, 0); }
 	|       S_GOTO '#' STRING	{ str_search($3, 0, 0,
-					  maxrow, maxcol, 1); }
+					  maxrow, maxcol, 1, 0); }
 	|       S_GOTO '%' STRING	{ str_search($3, 0, 0,
-					  maxrow, maxcol, 2); }
-	|	S_GOTO			{ go_last(); }
+					  maxrow, maxcol, 2, 0); }
+	|	S_GOTO			{ go_last(0); }
 	|	S_GOTO WORD		{ /* don't repeat last goto on
 						"unintelligible word" */ ; }
 	|	S_DEFINE strarg		{ struct ent_ptr arg1, arg2;
@@ -1385,13 +1385,13 @@ setitem	:	K_AUTO			{ setauto(1); }
 errlist :	K_ERROR range		{ num_search((double)0,
 					  $2.left.vp->row, $2.left.vp->col,
 					  $2.right.vp->row, $2.right.vp->col,
-					  CELLERROR); }
+					  CELLERROR, 0); }
 	|	K_ERROR			{ num_search((double)0, 0, 0,
-					  maxrow, maxcol, CELLERROR); }
+					  maxrow, maxcol, CELLERROR, 0); }
 	|	K_INVALID range		{ num_search((double)0,
 					  $2.left.vp->row, $2.left.vp->col,
 					  $2.right.vp->row, $2.right.vp->col,
-					  CELLINVALID); }
+					  CELLINVALID, 0); }
 	|	K_INVALID		{ num_search((double)0, 0, 0,
-					  maxrow, maxcol, CELLINVALID); }
+					  maxrow, maxcol, CELLINVALID, 0); }
 	;

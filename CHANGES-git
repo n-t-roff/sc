@@ -1,3 +1,5 @@
+2025-06-25
+     * Add 'N' command to repeat last search in opposite direction
 2017-09-08
      * Changes to make sc build on NetBSD 1.5
        (Issue #3 reported by DNied@GitHub)

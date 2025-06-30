@@ -1878,7 +1878,7 @@ g_free(void)
 
 /* repeat the last goto command */
 void
-go_last(void) {
+go_last(int reverse) {
     int num = 0;
 
     switch (gs.g_type) {
@@ -1886,7 +1886,7 @@ go_last(void) {
 	    error("Nothing to repeat"); break;
 	case G_NUM:
 	    num_search(gs.g_n, gs.g_row, gs.g_col,
-		gs.g_lastrow, gs.g_lastcol, gs.errsearch);
+		gs.g_lastrow, gs.g_lastcol, gs.errsearch, reverse);
 	    break;
 	case G_CELL:
 	    moveto(gs.g_row, gs.g_col, gs.g_lastrow, gs.g_lastcol,
@@ -1899,7 +1899,7 @@ go_last(void) {
 	case G_STR: 
 	    gs.g_type = G_NONE;	/* Don't free the string */
 	    str_search(gs.g_s, gs.g_row, gs.g_col, gs.g_lastrow, gs.g_lastcol,
-		    num); 
+		    num, reverse);
 	    break;
 
 	default: error("go_last: internal error");
@@ -1958,7 +1958,7 @@ moveto(int row, int col, int lastrow, int lastcol, int cornerrow,
  */
 void
 num_search(double n, int firstrow, int firstcol, int lastrow,
-    int lastcol, int errsearch)
+    int lastcol, int errsearch, int reverse)
 {
     register struct ent *p;
     register int r,c;
@@ -1980,6 +1980,9 @@ num_search(double n, int firstrow, int firstcol, int lastrow,
 	    curcol >= firstcol && curcol <= lastcol) {
 	endr = currow;
 	endc = curcol;
+    } else if (reverse) {
+	endr = firstrow;
+	endc = firstcol;
     } else {
 	endr = lastrow;
 	endc = lastcol;
@@ -1987,16 +1990,30 @@ num_search(double n, int firstrow, int firstcol, int lastrow,
     r = endr;
     c = endc;
     while (1) {
-	if (c < lastcol)
-	    c++;
-	else {
-	    if (r < lastrow) {
-		while (++r < lastrow && row_hidden[r]) /* */;
-		c = firstcol;
-	    } else {
-		r = firstrow;
-		c = firstcol;
-	    }
+	if (reverse) {
+		if (c > firstcol)
+		    c--;
+		else {
+		    if (r > firstrow) {
+			while (--r > firstrow && row_hidden[r]) /* */;
+			c = lastcol;
+		    } else {
+			r = lastrow;
+			c = lastcol;
+		    }
+		}
+	} else {
+		if (c < lastcol)
+		    c++;
+		else {
+		    if (r < lastrow) {
+			while (++r < lastrow && row_hidden[r]) /* */;
+			c = firstcol;
+		    } else {
+			r = firstrow;
+			c = firstcol;
+		    }
+		}
 	}
 	p = *ATBL(tbl, r, c);
 	if (!col_hidden[c] && p && (p->flags & IS_VALID) &&
@@ -2028,7 +2045,7 @@ num_search(double n, int firstrow, int firstcol, int lastrow,
 /* 'goto' a cell containing a matching string */
 void
 str_search(char *s, int firstrow, int firstcol, int lastrow, int lastcol,
-	int num)
+	int num, int reverse)
 {
     struct ent	*p;
     int		r, c;
@@ -2078,6 +2095,9 @@ str_search(char *s, int firstrow, int firstcol, int lastrow, int lastcol,
 	    curcol >= firstcol && curcol <= lastcol) {
 	endr = currow;
 	endc = curcol;
+    } else if (reverse) {
+	endr = firstrow;
+	endc = firstcol;
     } else {
 	endr = lastrow;
 	endc = lastcol;
@@ -2085,16 +2105,30 @@ str_search(char *s, int firstrow, int firstcol, int lastrow, int lastcol,
     r = endr;
     c = endc;
     while (1) {
-	if (c < lastcol) {
-	    c++;
+	if (reverse) {
+		if (c > firstcol)
+		    c--;
+		else {
+		    if (r > firstrow) {
+			while (--r > firstrow && row_hidden[r]) /* */;
+			c = lastcol;
+		    } else {
+			r = lastrow;
+			c = lastcol;
+		    }
+		}
 	} else {
-	    if (r < lastrow) {
-		while (++r < lastrow && row_hidden[r]) /* */;
-		c = firstcol;
-	    } else {
-		r = firstrow;
-		c = firstcol;
-	    }
+		if (c < lastcol)
+		    c++;
+		else {
+		    if (r < lastrow) {
+			while (++r < lastrow && row_hidden[r]) /* */;
+			c = firstcol;
+		    } else {
+			r = firstrow;
+			c = firstcol;
+		    }
+		}
 	}
 	p = *ATBL(tbl, r, c);
 	if (gs.g_type == G_NSTR) {

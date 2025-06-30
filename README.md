@@ -44,6 +44,7 @@ Functional extensions:
   but using the mouse requires ncurses.
   Using the mouse _wheel_ additionally requires
   ncurses version &ge; 6.)
+* Add 'N' command to repeat last search in opposite direction
 
 #### Documentation
 

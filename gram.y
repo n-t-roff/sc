@@ -123,8 +123,8 @@
 %token S_SET
 %token S_UP
 %token S_DOWN
-%token S_LEFT
-%token S_RIGHT
+%token S_MLEFT
+%token S_MRIGHT
 %token S_ENDUP
 %token S_ENDDOWN
 %token S_ENDLEFT
@@ -722,10 +722,10 @@ command:	S_LET var_or_range '=' e
 	|	S_UP NUMBER		{ backrow($2); }
 	|	S_DOWN			{ forwrow( 1); }
 	|	S_DOWN NUMBER		{ forwrow($2); }
-	|	S_LEFT			{ backcol( 1); }
-	|	S_LEFT NUMBER		{ backcol($2); }
-	|	S_RIGHT			{ forwcol( 1); }
-	|	S_RIGHT NUMBER		{ forwcol($2); }
+	|	S_MLEFT			{ backcol( 1); }
+	|	S_MLEFT NUMBER		{ backcol($2); }
+	|	S_MRIGHT		{ forwcol( 1); }
+	|	S_MRIGHT NUMBER		{ forwcol($2); }
 	|	S_ENDUP			{ doend(-1, 0); }
 	|	S_ENDDOWN		{ doend( 1, 0); }
 	|	S_ENDLEFT		{ doend( 0,-1); }

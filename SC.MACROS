@@ -214,8 +214,8 @@ Other Commands:
 
   up
   down
-  left
-  right
+  mleft
+  mright
 
     These do just what you would expect.  They move the cell cursor in
     the specified direction.  You can also use an optional numeric argu-

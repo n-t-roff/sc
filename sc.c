@@ -246,6 +246,7 @@ main (int argc, char  **argv)
     int popt = 0;
     int qopt = 0;
     int Mopt = 0;
+    int Lopt = 0;
 
     Vopt = 0;
 
@@ -270,7 +271,7 @@ main (int argc, char  **argv)
     }
 #endif
 
-    while ((c = getopt(argc, argv, "axmoncrCReP:W:vqM")) != EOF) {
+    while ((c = getopt(argc, argv, "axmoncrCReP:W:vVqM")) != EOF) {
     	switch (c) {
 	    case 'a':
 		    skipautorun = 1;
@@ -315,6 +316,9 @@ main (int argc, char  **argv)
 		    popt = 1;
 	    case 'v':
 		    break;
+	    case 'V':
+		    Lopt = 1;
+		    break;
 	    case 'q':
 		    qopt = 1;
 		    break;
@@ -324,18 +328,6 @@ main (int argc, char  **argv)
 	    default:
 		    exit (1);
 	}
-    }
-
-    if (!isatty(STDOUT_FILENO) || popt || qopt) usecurses = FALSE;
-    startdisp();
-    signals();
-    settcattr();
-    read_hist();
-
-    /* setup the spreadsheet arrays, initscr() will get the screen size */
-    if (!growtbl(GROWNEW, 0, 0)) {
-     	stopdisp();
-	exit (1);
     }
 
     /*
@@ -350,7 +342,25 @@ main (int argc, char  **argv)
 	for (revi = rev; (*revi++) != ':'; );	/* copy after colon */
 	strlcat(revmsg, revi, sizeof revmsg);
 	revmsg[strlen(revmsg) - 2] = 0;		/* erase last character */
-	strlcat(revmsg, ":  Type '?' for help.", sizeof revmsg);
+        if (! Lopt)
+	    strlcat(revmsg, ":  Type '?' for help.", sizeof revmsg);
+    }
+
+    if (Lopt) {
+        fprintf(stdout,"%s\n",revmsg);
+        return 0;
+    }
+
+    if (!isatty(STDOUT_FILENO) || popt || qopt) usecurses = FALSE;
+    startdisp();
+    signals();
+    settcattr();
+    read_hist();
+
+    /* setup the spreadsheet arrays, initscr() will get the screen size */
+    if (!growtbl(GROWNEW, 0, 0)) {
+     	stopdisp();
+	exit (1);
     }
 
 #ifdef MSDOS

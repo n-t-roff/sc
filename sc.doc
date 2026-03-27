@@ -299,6 +299,12 @@ is running.  Options specified when
 .B pname 
 is invoked
 override options saved in the data file.
+.\" ----------
+.TP
+.B \-V
+Print the version of
+.B pname
+to stdout and exit.
 .\" ==========
 .SS "Personal Initialization File"
 .\" ----------

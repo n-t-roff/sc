@@ -152,14 +152,16 @@ yylex(void)
 		if (isfunc) isfunc--;
 		for (tblp = linelim ? experres : statres; tblp->key; tblp++)
 		    if (((tblp->key[0] ^ tokenst[0]) & 0x5F) == 0) {
-		    /* Commenting the following line makes the search slower */
-		    /* but avoids access outside valid memory. A BST would   */
-		    /* be the better alternative. */
-		    /*  && tblp->key[tokenl] == 0) { */
 			unsigned int i = 1;
 			while (i < tokenl && ((tokenst[i] ^ tblp->key[i]) & 0x5F) == 0)
 			    i++;
-			if (i >= tokenl) {
+			/* Exact match: all tokenl chars matched and key ends
+			 * here. Reading key[tokenl] is safe: the match-loop
+			 * invariant guarantees strlen(key) >= tokenl (a shorter
+			 * key would have hit '\0' and exited early via the XOR
+			 * mismatch), so key[tokenl] is either another char or
+			 * the terminator. */
+			if (i >= tokenl && tblp->key[tokenl] == 0) {
 			    ret = tblp->val;
 			    colstate = (ret <= S_FORMAT);
 			    if (isgoto) {

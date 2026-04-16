@@ -1101,7 +1101,7 @@ closerow(int rs, int numrow)
 	}
 
 	/* move the rows, put the deleted, but now empty, row at the end */
-	for (; r + numrow < maxrows - 1; r += numrow) {
+	for (; r + numrow < maxrows; r += numrow) {
 	    row_hidden[r] = row_hidden[r + numrow];
 	    tbl[r] = tbl[r + numrow];
 	    pp = ATBL(tbl, r, 0);

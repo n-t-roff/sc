@@ -336,10 +336,8 @@ deleterow(register int arg)
 	    else
 		move_area(currow, fr->or_left->col, currow + arg,
 			fr->or_left->col, fr->or_right->row, fr->or_right->col);
-	    if (fr->ir_left->row > fr->ir_right->row)
-		add_frange(fr->or_left, fr->or_right, NULL, NULL, 0, 0, 0, 0);
-
-	    /* Update all marked cells. */
+	    /* Update all marked cells.  Defer the add_frange (which may free
+	     * fr) until after we're done dereferencing fr. */
 	    for (i = 0; i < 37; i++) {
 		if (savedcol[i] >= fr->or_left->col &&
 			savedcol[i] <= fr->or_right->col) {
@@ -379,6 +377,8 @@ deleterow(register int arg)
 		if (gs.strow >= currow + arg)
 		    gs.strow -= arg;
 	    }
+	    if (fr->ir_left->row > fr->ir_right->row)
+		add_frange(fr->or_left, fr->or_right, NULL, NULL, 0, 0, 0, 0);
 	}
     } else {
 	
@@ -1101,7 +1101,7 @@ closerow(int rs, int numrow)
 	}
 
 	/* move the rows, put the deleted, but now empty, row at the end */
-	for (; r + numrow < maxrows - 1; r += numrow) {
+	for (; r + numrow < maxrows; r += numrow) {
 	    row_hidden[r] = row_hidden[r + numrow];
 	    tbl[r] = tbl[r + numrow];
 	    pp = ATBL(tbl, r, 0);

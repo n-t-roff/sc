@@ -233,9 +233,14 @@ void
 fix_frames(int row1, int col1, int row2, int col2, int delta1, int delta2)
 {
     int r1, r2, c1, c2;
+    int cfr_lc = 0, cfr_rc = 0;	/* snapshot of cfr's outer cols */
     struct frange *fr, *cfr;
 
     cfr = find_frange(currow, curcol);
+    if (cfr) {
+	cfr_lc = cfr->or_left->col;
+	cfr_rc = cfr->or_right->col;
+    }
     if (frame_base)
 	for (fr = frame_base; fr; fr = fr->r_next) {
 	    r1 = fr->or_left->row;
@@ -243,12 +248,12 @@ fix_frames(int row1, int col1, int row2, int col2, int delta1, int delta2)
 	    r2 = fr->or_right->row;
 	    c2 = fr->or_right->col;
 
-	    if (!(cfr && (c1 < cfr->or_left->col || c1 > cfr->or_right->col))) {
+	    if (!(cfr && (c1 < cfr_lc || c1 > cfr_rc))) {
 		if (r1 >= row1 && r1 <= row2) r1 = row2 - delta1;
 		if (c1 >= col1 && c1 <= col2) c1 = col2 - delta1;
 	    }
 
-	    if (!(cfr && (c2 < cfr->or_left->col || c2 > cfr->or_right->col))) {
+	    if (!(cfr && (c2 < cfr_lc || c2 > cfr_rc))) {
 		if (r2 >= row1 && r2 <= row2) r2 = row1 + delta2;
 		if (c2 >= col1 && c2 <= col2) c2 = col1 + delta2;
 	    }
@@ -261,12 +266,12 @@ fix_frames(int row1, int col1, int row2, int col2, int delta1, int delta2)
 	    r2 = fr->ir_right->row;
 	    c2 = fr->ir_right->col;
 
-	    if (!(cfr && (c1 < cfr->or_left->col || c1 > cfr->or_right->col))) {
+	    if (!(cfr && (c1 < cfr_lc || c1 > cfr_rc))) {
 		if (r1 >= row1 && r1 <= row2) r1 = row2 - delta1;
 		if (c1 >= col1 && c1 <= col2) c1 = col2 - delta1;
 	    }
 
-	    if (!(cfr && (c2 < cfr->or_left->col || c2 > cfr->or_right->col))) {
+	    if (!(cfr && (c2 < cfr_lc || c2 > cfr_rc))) {
 		if (r2 >= row1 && r2 <= row2) r2 = row1 + delta2;
 		if (c2 >= col1 && c2 <= col2) c2 = col1 + delta2;
 	    }

@@ -712,6 +712,8 @@ main (int argc, char  **argv)
 		    break;
 
 		case ctl('g'):
+		    if (mode_ind == 'v')
+			toggle_navigate_mode();
 		    showrange = 0;
 		    linelim = -1;
 		    (void) move(1, 0);

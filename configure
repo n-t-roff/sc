@@ -26,6 +26,7 @@ MAKE=
 DEFS=
 LIB_LEX=
 LIB_CURSES=
+PKG_CONFIG=${PKG_CONFIG:-pkg-config}
 cat /dev/null > compat.h
 
 while [ $# -gt 0 ]; do
@@ -330,6 +331,7 @@ compile_curses () {
 #include "compat.h"
 int
 main() {
+	keypad(stdscr, TRUE);
 	return 0;
 }
 EOT
@@ -350,12 +352,27 @@ test_curses () {
 }
 
 check_ncursesw () {
-	LIB_CURSES="-lncursesw"
-	check_for $LIB_CURSES
 	ODEFS=$DEFS
 
-	# At first test for specific ncursesw.h to not used -lncursesw with
-	# traditional curses.h if both curses systems are installed.
+	if command -v $PKG_CONFIG >/dev/null 2>&1 &&
+		$PKG_CONFIG --exists ncursesw; then
+		LIB_CURSES=`$PKG_CONFIG --libs ncursesw`
+		INCDIR_CURSES=`$PKG_CONFIG --cflags ncursesw`
+		RPATH_CURSES=
+		LIBDIR_CURSES=
+		check_for "ncursesw ($PKG_CONFIG)"
+		PASS_TEXT=" ($PKG_CONFIG)"
+		test_curses && return
+		INCDIR_CURSES=
+		LIB_CURSES=
+		PASS_TEXT=
+	fi
+
+	LIB_CURSES="-lncursesw"
+	check_for $LIB_CURSES
+
+	# First test for ncursesw-specific header to avoid using -lncursesw
+	# with a traditional curses.h when both curses implementations are installed.
 
 	DEFS="$DEFS -DHAVE_NCURSESW_CURSES_H"
 	INCDIR_CURSES="-I/usr/include/ncurses6"
